@@ -130,10 +130,12 @@ resource "aws_iam_role_policy" "ecr_push_policy" {
         "Effect": "Allow",
         "Action": [
           "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
           "ecr:PutImage",
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload"
+          "ecr:CompleteLayerUpload",
+          "ecr:GetDownloadUrlForLayer",
         ],
         "Resource": [
           aws_ecr_repository.this.arn
