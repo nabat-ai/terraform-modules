@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.github.arn]
+      identifiers = [data.aws_iam_openid_connect_provider.github.arn]
     }
 
     condition {
@@ -130,10 +130,12 @@ resource "aws_iam_role_policy" "ecr_push_policy" {
         "Effect": "Allow",
         "Action": [
           "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
           "ecr:PutImage",
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload"
+          "ecr:CompleteLayerUpload",
+          "ecr:GetDownloadUrlForLayer",
         ],
         "Resource": [
           aws_ecr_repository.this.arn
